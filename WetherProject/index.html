@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WetherProject</title>
+</head>
+<body>
+    <h1>Welcome!!!</h1>
+    <h2>Wich Citys Weather would you like to Search??</h2>
+    <form action="/" method="post">
+        <ul>
+            <li>
+                <label for="cityInput">City Name:</label>
+                <input type="text" name="cityName" id="cityInput">
+            </li>
+            <li>
+                <label for="unitsC">Centigrade &#8451;</label>
+                <input type="radio" name="units" id="unitsC" value="metric">
+                <label for="unitsF">Fahrenheit &#8457</label>
+                <input type="radio" name="units" id="unitsF" value="imperial">
+            </li>
+        </ul>
+        <button type="submit">Search</button>
+    </form>
+    
+</body>
+</html>

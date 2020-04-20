@@ -1,0 +1,26 @@
+/********************************** TAG SELECTORS *****************************************/
+h1{
+    color: red;
+    font-size: 75px;
+}
+p{
+    font-size: 30px;
+}
+
+/********************************** Class SELECTORS *****************************************/
+.bacon {
+    background-color: red;
+}
+
+
+/********************************** Pseudo Classes SELECTORS *****************************************/
+
+p:hover{
+    color: blueviolet;
+}
+
+/********************************** id SELECTORS *****************************************/
+/** Should avoid usin id to alter CSS from a object **/
+#heading{
+    font-style: italic;
+}

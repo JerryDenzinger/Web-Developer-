@@ -1,0 +1,21 @@
+body {
+  background-color: lightskyblue;
+}
+h1 {
+  color: #142850;
+}
+p {
+  color: #0c7b93;
+}
+
+table {
+  color: #27496d;
+}
+
+hr {
+  border-style: none;
+  border-top-style: dotted;
+  border-color: lightgray;
+  border-width: 5px;
+  width: 4%;
+}

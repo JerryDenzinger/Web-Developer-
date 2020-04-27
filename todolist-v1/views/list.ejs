@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+</head>
+<body>
+    <h1><%= kindOfDay %></h1>
+
+    <h2>Today you will have to:</h2>
+    <ul>
+        <% for (i=0 ; i<newItems.length; i++){%>
+        <li><%= newItems[i]%></li>
+        <%  }  %> 
+        <form class="" action="/" method="post"> 
+            <input type="text" name="upNext" placeholder="What´s next">
+            <br>
+            <button type="submit" name="button">Submit</button>
+        </form>
+    </ul>
+</body>
+</html>

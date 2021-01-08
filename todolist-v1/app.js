@@ -11,13 +11,13 @@ let workItems = [];
 
 app.get("/", function (req, res) {
 
-  let day = date.getDate();
+  const day = date.getDate();
 
   res.render("list", { listTitle: day, newItems: items });
 });
 
 app.post("/", function (req, res) {
-  item = req.body.upNext;
+  const item = req.body.upNext;
   if (req.body.list === "Work") {
     workItems.push(item);
     res.redirect("/work");

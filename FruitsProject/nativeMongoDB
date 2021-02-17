@@ -1,0 +1,209 @@
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+
+//Connection URL
+const url = 'mongodb://localhost:27017';
+
+// Database Name 
+const dbName = 'fruitsDB';
+
+// Create a new MongoClient
+const client = new MongoClient(url, { useUnifiedTopology: true });
+
+// Use connect method to connect to the Server 
+client.connect(function (err) {
+    assert.strictEqual(null, err);
+    console.log("Connected succesfully to server");
+
+    const db = client.db(dbName);
+
+    // insertDocuments(db, function () {
+    //   client.close;
+    //});
+    findDocuments(db, function () {
+        client.close;
+    });
+});
+
+const insertDocuments = function (db, callback) {
+    // Get Fruits collection 
+    const collection = db.collection('fruits');
+    // Insert some documents 
+    collection.insertMany([
+        {
+            name: "Apple",
+            score: 8,
+            review: "Great fruit"
+        },
+        {
+            name: "Orange",
+            score: 6,
+            review: "Kind of sour"
+        },
+        {
+            name: "Banana",
+            score: 9,
+            review: "Great stuff!!"
+        }
+    ], function (err, result) {
+        assert.strictEqual(err, null);
+        assert.strictEqual(3, result.result.n);
+        assert.strictEqual(3, result.ops.length);
+        console.log("Inserted 3 documents into the collection");
+        callback(result);
+    });
+
+};
+
+const findDocuments = function (db, callback) {
+    // Get Fruits collection 
+    const collection = db.collection('fruits');
+    // find some documents 
+    collection.find({}).toArray(function (err, fruits) {
+        assert.strictEqual(err, null);
+        console.log("Found the following records");
+        console.log(fruits);
+        callback(fruits);
+    })
+};
+
+
+<!----------------------------------------- USing Mongoose ------------------------------------------------>
+
+const mongoose = require('mongoose');
+mongoose.connect("mongodb://localhost:27017/fruitsDB", { useNewUrlParser: true, useUnifiedTopology: true });
+
+const fruitSchema = new mongoose.Schema({
+    name: String,
+    rating: Number,
+    review: String
+});
+
+const Fruit = mongoose.model("Fruit", fruitSchema);
+
+const banana = new Fruit({
+    name: "Banana",
+    rating: 10,
+    review: "Always delicuous fruit!!"
+});
+
+const kiwi = new Fruit({
+    name: "Kiwi",
+    rating: 10,
+    review: "The best fruit!!"
+});
+
+const orange = new Fruit({
+    name: "Orange",
+    rating: 5,
+    review: "Good for making juice!!"
+});
+
+// Fruit.insertMany([banana, kiwi, orange], function (err) {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log("Succesfully saved all the fruits to fruits to fruitsDB");
+//     }
+// });
+// fruit.save();
+
+Fruit.find(function (err, fruits) {
+    if (err) {
+        console.log(err);
+    } else {
+        mongoose.connection.close();
+        fruits.forEach(fruit => {
+            console.log(fruit.name);
+        });
+
+    }
+});
+
+const personSchema = new mongoose.Schema({
+    name: String,
+    age: Number
+});
+
+const Person = mongoose.model("Person", personSchema);
+
+const person = new Person({
+    name: "John",
+    age: 37
+});
+
+//person.save();
+// people.save();
+
+
+<!---------------------------------- Delete collection if exists  ------------------------------------------------>
+
+// const connection = mongoose.connection;
+// connection.once("open", function () {
+//     console.log("MongoDB connected successfully");
+//     connection.db.listCollections().toArray(function (err, names) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             for (i = 0; i < names.length; i++) {
+//                 console.log(names[i].name);
+//                 if ((names[i].name = "peoples")) {
+//                     console.log("peoples Collection Exists in DB");
+//                     mongoose.connection.db.dropCollection(
+//                         "peoples",
+//                         function (err, result) {
+//                             console.log("Collection droped");
+//                         }
+//                     );
+//                     console.log("Userprofile Collection No Longer Available");
+//                 } else {
+//                     console.log("Collection doesn't exist");
+//                 }
+//             }
+//         }
+//     });
+// });
+
+
+<!------------------------------------------------------- Find and Delete with mongoose ------------------------------------------->
+
+// const peopleSchema = new mongoose.Schema({
+//     name: String,
+//     age: Number
+// });
+
+// const People = mongoose.model("People", peopleSchema);
+
+
+
+// People.deleteMany({ name: "John" }, function (err) {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log("Data succesfully deleted!!!");
+//     }
+// });
+
+// People.find(function (err, people) {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         mongoose.connection.close();
+//         people.forEach(person => {
+//             console.log(person.name);
+//         });
+
+//     }
+// });
+
+
+
+
+
+// Fruit.updateOne({ _id: "602befb1c836fd56fc673b1f" }, { name: "Grapefruit" }, function (err) {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log("Data succesfully updated!!!");
+//     }
+// });
